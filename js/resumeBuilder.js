@@ -1,11 +1,12 @@
 
-var fullName = "Robert C. Peng";
-var formattedName = HTMLheaderName.replace("%data%",fullName);
-$("#header").prepend(formattedRole);
-
 var desiredRole = "Software Engineer";
 var formattedRole = HTMLheaderRole.replace("%data%", desiredRole);
+$("#header").prepend(formattedRole);
+
+var fullName = "Robert C. Peng";
+var formattedName = HTMLheaderName.replace("%data%",fullName);
 $("#header").prepend(formattedName);
+
 
 
 var Skills =  ["Python", "Ruby", "C", "Scheme", "Java"]
@@ -80,40 +81,90 @@ var education = {
 	{
 		"name": "Indiana University",
 		"location" : "Bloomington, IN",
+		"date" : "2011-2014",
 		"degree" : "B.A",
 		"majors" : "Computer Science",
 	},
 	{
 		"name": "Purdue University",
 		"location" : "West Lafayette, IN",
+		"date" : "2009 - 2011",
+		"degree" : "N/A",
 		"majors" : "Communications",
 	}
   ]
 };
 
-$("#")
-//for skills tag
-if(bio.skills.length > 0){
-	$("#header").append(HTMLskillsStart);
-	for(var i = 0 ; i < bio.skills.length ; i++){
-	var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
-	$("#skills").append(formattedSkill);
-	}
+
+$(document).click(function(loc){
+	var x = loc.pageX;
+	var y = loc.pageY;
+
+	logClicks(x,y);
+});
+
+
+$("#main").append(bio.name);
+
+function displayContact(){
+		$("#topContacts").append(HTMLcontactGeneric);
+		var formattedMobile = HTMLmobile.replace("%data%", bio.contact.mobile);
+		$("#flex-item").append(formattedMobile);
+
 }
 
-//for work experience tag
-for (job in work.jobs){
-	$("#workExperience").append(HTMLworkStart);
 
-	var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
-	var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
-	var formattedEmployerTitle = formattedEmployer + formattedTitle;
-	$(".work-entry:last").append(formattedEmployerTitle)
-
-	var formattedDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
-	$(".work-entry:last").append(formattedDates);
-	for (var i = 0 ; i < work.jobs[job].description.length ; i++) {
-		var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description[i]);
-		$(".work-entry:last").append(formattedDescription);
+function displaySkills(){
+//for skills tag
+	if(bio.skills.length > 0){
+		$("#header").append(HTMLskillsStart);
+		for(var i = 0 ; i < bio.skills.length ; i++){
+		var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
+		$("#skills").append(formattedSkill);
+		}
 	}
 };
+
+function displayWork(){
+//for work experience tag
+	for (job in work.jobs){
+		$("#workExperience").append(HTMLworkStart);
+
+		var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
+		var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
+		var formattedEmployerTitle = formattedEmployer + formattedTitle;
+		$(".work-entry:last").append(formattedEmployerTitle);
+		var formattedDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
+		$(".work-entry:last").append(formattedDates);
+		for (var i = 0 ; i < work.jobs[job].description.length ; i++) {
+			var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description[i]);
+			$(".work-entry:last").append(formattedDescription);
+		}
+	};
+}
+
+
+function displayEducation(){
+//for work experience tag
+	for (school in education.schools){
+		$("#education").append(HTMLschoolStart);
+
+		var formattedName = HTMLschoolName.replace("%data%",education.schools[school].name);
+		$(".education-entry:last").append(formattedName);
+		var formattedDegree = HTMLschoolDegree.replace("%data%",education.schools[school].degree);
+		$(".education-entry:last").append(formattedDegree);
+		var formattedLocation = HTMLschoolLocation.replace("%data%",education.schools[school].location);
+		$(".education-entry:last").append(formattedLocation);
+		var formattedDates = HTMLschoolDates.replace("%data%",education.schools[school].date);
+		$(".education-entry:last").append(formattedDates);
+		var formattedMajor = HTMLschoolMajor.replace("%data%",education.schools[school].majors);
+		$(".education-entry:last").append(formattedMajor);
+
+	};
+}
+
+
+
+displaySkills();
+displayWork();
+displayEducation();
